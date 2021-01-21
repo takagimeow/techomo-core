@@ -60,3 +60,24 @@ $ yarn run lint:fix
 ```bash
 $ yarn run start
 ```
+
+# ジェネリクスの検証
+```js
+// type Function<Props, K extends keyof Props, Result>;
+type A = {
+  id: number;
+  message: string;
+  date: Date;
+};
+type B = keyof A; // type B = "id" | "message" | "date"
+type C = Exclude<A[B], undefined>; // string | number | Date
+/**
+ * {
+      message: string;
+      date: Date;
+  }
+  */
+type D = Pick<A, Exclude<keyof A, 'id'>>;
+type F = Exclude<keyof A, 'id'>; // "message" | "date"
+type F = {} extends A ? { call: () => void } : {};
+```

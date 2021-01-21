@@ -1,7 +1,3 @@
-import { log } from 'src/logger';
+import { MemoBuilder } from './classes/Memo';
 
-export function main() {
-  log('Hello, World in Japan');
-}
-
-main();
+export { MemoBuilder };
