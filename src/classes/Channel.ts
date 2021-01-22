@@ -117,6 +117,30 @@ export class Channel {
     return this;
   }
 
+  allocate(id: string) {
+    if (common.has(this, 'memos')) {
+      const memos = this.memos as Memos;
+      const foundIndex = memos.findIndex({ id }).value();
+      if (foundIndex < 0) {
+        return this;
+      }
+      memos.value[foundIndex].index = foundIndex;
+      this.memos = memos;
+    }
+    return this;
+  }
+
+  allocateAll() {
+    if (common.has(this, 'memos')) {
+      const memos = this.memos as Memos;
+      for (let i = 0; i < memos.value.length; i += 1) {
+        const memoId = memos.value[i].id as string;
+        this.allocate(memoId);
+      }
+    }
+    return this;
+  }
+
   delete(id: string) {
     if (common.has(this, 'memos')) {
       const memos = this.memos as Memos;

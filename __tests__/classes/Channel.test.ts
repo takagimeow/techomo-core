@@ -69,5 +69,28 @@ describe('Channelクラス', () => {
       expect(channel.length()).toBe(9);
       expect(channel.get('memos')?.value[8].id).not.toBe(memoId);
     });
+    it('対応するidを持つMemoクラスのインスタンスに新しいインデックスを割り当てる', () => {
+      const channel = channelGenerator();
+      for (let i = 0; i < 10; i += 1) {
+        const memo = memoGenerator();
+        channel.push(memo);
+      }
+      const memo = channel.memos?.value[9];
+      const memoId = memo?.get('id') as string;
+      channel.swap(memoId, 4);
+      channel.allocate(memoId);
+      expect(channel.memos?.value[4].index).toBe(4);
+    });
+    it('memosの要素のすべてにindexを割り当てる', () => {
+      const channel = channelGenerator();
+      for (let i = 0; i < 10; i += 1) {
+        const memo = memoGenerator();
+        channel.push(memo);
+      }
+      channel.allocateAll();
+      for (let i = 0; i < 10; i += 1) {
+        expect(channel.memos?.value[i].index).toBe(i);
+      }
+    });
   });
 });
