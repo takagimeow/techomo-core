@@ -13,8 +13,8 @@ export class MemoBuilder {
     return this;
   }
 
-  channelID(channelID: Memo[keyof Pick<Memo, 'channelID'>]) {
-    this._memo = Object.assign(this._memo, { channelID });
+  channelId(channelId: Memo[keyof Pick<Memo, 'channelId'>]) {
+    this._memo = Object.assign(this._memo, { channelId });
     return this;
   }
 

@@ -11,7 +11,7 @@ describe('Memoクラス', () => {
       expect(memo.createdAt).toBeTruthy();
     });
     it('MemoBuilder関数を通してビルダーパターンのMemoクラスのインスタンスを作成する', () => {
-      const memo = new MemoBuilder().id('').channelID('').index(0).title('').body('').build();
+      const memo = new MemoBuilder().id('').channelId('').index(0).title('').body('').build();
       expect(memo.index).toBe(0);
     });
   });

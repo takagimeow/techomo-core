@@ -1,15 +1,24 @@
-/* eslint-disable no-underscore-dangle */
 import * as common from 'src/common';
 
 export interface Memo {
   id?: string;
-  channelID?: string;
+  channelId?: string;
   index?: number;
   title?: string;
   body?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+/*
+type memoIdType = Pick<Memo, 'id'>;
+type memoChannelIdType = Pick<Memo, 'channelId'>;
+type memoIndexType = Pick<Memo, 'index'>;
+type memoTitleTYpe = Pick<Memo, 'title'>;
+type memoBodyType = Pick<Memo, 'body'>;
+type memoCreatedAtType = Pick<Memo, 'createdAt'>;
+type memoUpdatedAtType = Pick<Memo, 'updateUpdatedAt'>;
+*/
 
 export class Memo {
   id?: string;
@@ -24,11 +33,13 @@ export class Memo {
 
   createdAt?: Date;
 
+  updatedAt?: Date;
+
   constructor(props?: Memo) {
     const createdAt = new Date();
 
     this.id = common.has(props, 'id');
-    this.channelID = common.has(props, 'channelID');
+    this.channelId = common.has(props, 'channelId');
     this.index = common.has(props, 'index');
     this.title = common.has(props, 'title');
     this.body = common.has(props, 'body');
@@ -48,10 +59,6 @@ export class Memo {
     return Object.assign(this, { channelId });
   }
 
-  editIndex(index: number): this & Pick<Memo, 'index'> {
-    return Object.assign(this, { index });
-  }
-
   editTitle(title: string): this & Pick<Memo, 'title'> {
     return Object.assign(this, { title });
   }
@@ -63,10 +70,6 @@ export class Memo {
   updateUpdatedAt(updatedAt: Date): this & Pick<Memo, 'updatedAt'> {
     return Object.assign(this, { updatedAt });
   }
-}
-
-export function MemoBuilder() {
-  return new Memo();
 }
 
 /*
