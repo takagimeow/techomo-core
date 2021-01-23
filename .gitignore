@@ -1,8 +1,12 @@
 node_modules
 dist
 docs
-uml
 builderFactory.ts
+
+uml/node-json-db.pu
+uml/Proxyの構造.pu
+uml/コンセプト.pu
 
 # 一時的
 Workspace*.ts
+Base.ts

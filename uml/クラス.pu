@@ -1,0 +1,114 @@
+@startuml
+
+title "クラス構成"
+
+class Memo {
+  + id: string
+  + channelId: string
+  + index: number
+  + title: string
+  + body: string
+  + createdAt: Date
+  + updatedAt: Date
+  .. Getter ..
+  + get<T extends keyof Memo>(key: T): this[T] | undefined
+  .. Setter ..
+  + editId(id: string): this & PickMemo, 'id'>
+  + editChannelId(channelId: string): this & Pick<Memo, 'channelId'>
+  + editTitle(title: string): this & Pick<Memo, 'title'>
+  + editBody(body: string): this & Pick<Memo, 'body'>
+  + updateUpdatedAt(updatedAt: Date): this & Pick<Memo, 'updatedAt'>
+}
+
+class MemoBuilder {
+  # _memo: Memo
+
+  + constructor(): void
+  + id(id: Memo[keyof Pick<Memo, 'id>]): this
+  + channelId(channelId: Memo[keyof Pick<Memo, 'channelId'>]): this
+  + index(index: Memo[keyof Pick<Memo, 'index'>]): this
+  + title(title: Memo[keyof Pick<Memo, 'title'>]): this
+  + body(body: Memo[keyof Pick<Memo, 'body']): this
+  + build(): Memo
+}
+
+MemoBuilder o-- Memo
+
+class Channel {
+  + id: string
+  + workspaceId: string
+  + index: number 
+  + name: string
+  + memos: lodash.CollectionChain<Memo>[]
+  + bookmarks: string[]
+  + color: string
+  + createdAt: Date
+  + updatedAt: Date
+  .. Getter ..
+  + get<T extends keyof Channel>(key: T): this[T] | undefined
+  .. Setter ..
+  editId(id: string): this & Pick<Channel, 'id'>
+  editWorkspaceId(workspaceId: string): this & Pick<Channel, 'workspaceId'>
+  editName(name: string): this & Pick<Channel, 'name'>
+  editColor(color: string): this & Pick<Channel, 'color'>
+  updateUpdatedAt(updatedAt: Date): this & Pick<Channel, 'updatedAt'>
+  .. Methods for memos..
+  length(): number
+  push(memo: Memo): this;
+  swap(id: string, index: number): this
+  delete(id: string): this;
+}
+
+class ChannelBuilder {
+  # _memo: Memo
+
+  + constructor(): void
+  + id(id: Channel[keyof Pick<Channel, 'id>]): this
+  + workspaceId(workspaceId: Memo[keyof Pick<Channel, 'workspaceId'>]): this
+  + index(index: Memo[keyof Pick<Memo, 'index'>]): this
+  + name(name: Channel[keyof Pick<Channel, 'name'>]): this
+  + memos(memos: Memo[]): this
+  + bookmarks(bookmarks: Channel[keyof Pick<Channel, 'bookmarks']): this
+  + color(color: Channel[keyof Pick<Channel, 'color'>]): this
+  + build(): Channel
+}
+
+Channel *-- Memo
+Channel *-- MemoBuilder
+ChannelBuilder o-- Channel
+
+class Workspace {
+  + id: string
+  + index: number
+  + name: string
+  + channels: lodash.CollectionChain<Channel>
+  + color: string
+  + createdAt: Date
+  + updatedAt: Date
+  .. Getter ..
+  + get<T extends keyof Workspace>(key: T): this[T] | undefined
+  .. Setter ..
+  + editName: (name: string) => this & Exclude<Pick<Workspace, 'title'>, undefined>
+  + editColor: (color: string) => this & Exclude<Pick<Workspace, 'color'>, undefined>
+  .. Methods for channels ..
+  + swap(id: string, index: number): this
+  + delete(id: string): this;
+}
+
+class WorkspaceBuilder {
+  # _channel: Channel
+
+  + constructor(): void
+  + id(id: Workspace[keyof Pick<Workspace, 'id>]): this
+  + index(index: Memo[keyof Pick<Memo, 'index'>]): this
+  + name(name: Workspace[keyof Pick<Workspace, 'name'>]): this
+  + channels(channels: lodash.CollectionChain<Channel>): this
+  + color(color: Workspace[keyof Pick<Workspace, 'color'>]): this
+  + build(): Workspace
+}
+
+Workspace *-- Channel
+Workspace *-- ChannelBuilder
+WorkspaceBuilder o-- Workspace
+
+@enduml
