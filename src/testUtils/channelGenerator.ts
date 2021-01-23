@@ -3,11 +3,11 @@ import { ChannelBuilder } from 'src/classes/ChannelBuilder';
 
 export function channelGenerator() {
   const id = faker.random.uuid();
-  const workspaceId = faker.random.uuid();
+  const groupId = faker.random.uuid();
   const name = faker.lorem.text();
   const channel = new ChannelBuilder()
     .id(id)
-    .workspaceId(workspaceId)
+    .groupId(groupId)
     .index(0)
     .name(name)
     .memos([])

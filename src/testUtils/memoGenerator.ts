@@ -6,6 +6,13 @@ export function memoGenerator() {
   const groupId = faker.random.uuid();
   const name = faker.lorem.text();
   const body = faker.lorem.paragraph();
-  const memo = new MemoBuilder().id(id).groupId(groupId).index(0).name(name).body(body).build();
+  const memo = new MemoBuilder()
+    .id(id)
+    .groupId(groupId)
+    .index(0)
+    .name(name)
+    .color('')
+    .body(body)
+    .build();
   return memo;
 }

@@ -8,6 +8,7 @@ export interface Base {
   groupId?: string;
   index?: number;
   name?: string;
+  color?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -21,6 +22,8 @@ export abstract class Base {
 
   name?: string;
 
+  color?: string;
+
   createdAt?: Date;
 
   updatedAt?: Date;
@@ -30,6 +33,7 @@ export abstract class Base {
     this.groupId = common.has(props, 'groupId');
     this.index = common.has(props, 'index');
     this.name = common.has(props, 'name');
+    this.color = common.has(props, 'color');
 
     const createdAt = new Date();
     this.createdAt = createdAt;
@@ -52,6 +56,14 @@ export abstract class Base {
     if (name.length > NAME_LENGTH_MAX) return this;
     const newName = xss(name);
     return Object.assign(this, { name: newName });
+  }
+
+  editColor(color: string): this & Exclude<Pick<this, 'color'>, undefined> {
+    const regexp = new RegExp('^#(?:[0-9a-fA-F]{3}){1,2}$');
+    if (regexp.exec(color)) {
+      return Object.assign(this, { color });
+    }
+    return this;
   }
 
   updateUpdatedAt(updatedAt: Date): this & Exclude<Pick<this, 'updatedAt'>, undefined> {

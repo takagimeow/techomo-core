@@ -23,6 +23,20 @@ export abstract class BaseBuilder {
     return this;
   }
 
+  name(name: Exclude<Base[keyof Pick<Base, 'name'>], undefined>) {
+    this._base = Object.assign(this._base, { name: '' });
+    this._base.editName(name);
+    return this;
+  }
+
+  color(color: Exclude<Base[keyof Pick<Base, 'color'>], undefined>) {
+    this._base = Object.assign(this._base, { color: '#000000' });
+    if (color !== '') {
+      this._base.editColor(color);
+    }
+    return this;
+  }
+
   build() {
     return this._base;
   }

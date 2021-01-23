@@ -36,7 +36,7 @@ MemoBuilder o-- Memo
 
 class Channel {
   + id: string
-  + workspaceId: string
+  + groupId: string
   + index: number 
   + name: string
   + memos: lodash.CollectionChain<Memo>[]
@@ -48,7 +48,7 @@ class Channel {
   + get<T extends keyof Channel>(key: T): this[T] | undefined
   .. Setter ..
   editId(id: string): this & Pick<Channel, 'id'>
-  editWorkspaceId(workspaceId: string): this & Pick<Channel, 'workspaceId'>
+  editGroupId(groupId: string): this & Pick<Channel, 'groupId'>
   editName(name: string): this & Pick<Channel, 'name'>
   editColor(color: string): this & Pick<Channel, 'color'>
   updateUpdatedAt(updatedAt: Date): this & Pick<Channel, 'updatedAt'>
@@ -64,7 +64,7 @@ class ChannelBuilder {
 
   + constructor(): void
   + id(id: Channel[keyof Pick<Channel, 'id>]): this
-  + workspaceId(workspaceId: Memo[keyof Pick<Channel, 'workspaceId'>]): this
+  + groupId(groupId: Memo[keyof Pick<Channel, 'groupId'>]): this
   + index(index: Memo[keyof Pick<Memo, 'index'>]): this
   + name(name: Channel[keyof Pick<Channel, 'name'>]): this
   + memos(memos: Memo[]): this
