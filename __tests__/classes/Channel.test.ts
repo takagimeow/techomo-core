@@ -3,7 +3,7 @@ import { ChannelBuilder } from 'src/classes/ChannelBuilder';
 import { memoGenerator } from 'src/testUtils/memoGenerator';
 import { channelGenerator } from 'src/testUtils/channelGenerator';
 import { textGenerator } from 'src/testUtils/textGenerator';
-import { NAME_LENGTH_MAX } from 'src/classes/Channel';
+import { Memos, NAME_LENGTH_MAX } from 'src/classes/Channel';
 
 jest.setTimeout(10000);
 
@@ -209,6 +209,49 @@ describe('Channelクラス', () => {
       for (let i = 0; i < 9; i += 1) {
         expect(channel.memos?.value[i].channelId).toBe(channel.id);
       }
+    });
+  });
+
+  describe('ブックマーク機能', () => {
+    it('ブックマークに追加する場合、memosに同一のidをもつインスタンスが存在していない場合は追加できない', () => {
+      const channel = channelGenerator();
+      for (let i = 0; i < 9; i += 1) {
+        const memo = memoGenerator();
+        channel.push(memo);
+      }
+      const memos = channel.memos as Memos;
+      channel.bookmark(memos.value[5].id as string);
+      channel.bookmark(memos.value[3].id as string);
+      let bookmarks = channel.getBookmarks();
+      expect(bookmarks.length).toBe(2);
+
+      channel.bookmark('not exist');
+      bookmarks = channel.getBookmarks();
+      expect(bookmarks.length).toBe(2);
+      for (let i = 0; i < bookmarks.length; i += 1) {
+        expect(bookmarks[i].id).not.toBe('not exist');
+      }
+    });
+
+    it('ブックマークを削除する場合、memosに同一のidをもつインスタンスが存在していない場合は削除できない', () => {
+      const channel = channelGenerator();
+      for (let i = 0; i < 10; i += 1) {
+        const memo = memoGenerator();
+        channel.push(memo);
+      }
+
+      const memos = channel.memos as Memos;
+      channel.bookmark(memos.value[5].id as string);
+      channel.bookmark(memos.value[3].id as string);
+      let bookmarks = channel.getBookmarks();
+      channel.unbookmark(memos.value[5].id as string);
+      bookmarks = channel.getBookmarks();
+      expect(bookmarks.length).toBe(1);
+
+      channel.unbookmark(memos.value[9].id as string);
+      bookmarks = channel.getBookmarks();
+      expect(bookmarks.length).toBe(1);
+      expect(bookmarks[0].id).toBe(memos.value[3].id as string);
     });
   });
 });

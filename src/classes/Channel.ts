@@ -4,7 +4,7 @@ import xss from 'xss';
 // import lowmemos from 'src/lowmemos';
 import { Memo } from './Memo';
 
-type Memos = lodash.CollectionChain<Memo>;
+export type Memos = lodash.CollectionChain<Memo>;
 
 export const NAME_LENGTH_MAX = 140;
 
@@ -126,6 +126,55 @@ export class Channel {
     }
 
     return this;
+  }
+
+  bookmark(memoId: string) {
+    if (common.has(this, 'memos') && common.has(this, 'bookmarks')) {
+      const memos = this.memos as Memos;
+      const foundIndex = memos.findIndex({ id: memoId }).value();
+      if (foundIndex < 0) {
+        return this;
+      }
+      this.bookmarks?.push(memoId);
+    }
+    return this;
+  }
+
+  unbookmark(memoId: string) {
+    if (common.has(this, 'memos') && common.has(this, 'bookmarks')) {
+      const bookmarks = this.bookmarks as string[];
+      let foundIndex = -1;
+      for (let i = 0; i < bookmarks.length; i += 1) {
+        if (bookmarks[i] === memoId) {
+          foundIndex = i;
+          break;
+        }
+      }
+      if (foundIndex < 0) {
+        return this;
+      }
+      bookmarks.splice(foundIndex, foundIndex + 1);
+      this.bookmarks = bookmarks;
+    }
+
+    return this;
+  }
+
+  getBookmarks() {
+    if (common.has(this, 'memos') && common.has(this, 'bookmarks')) {
+      const memos = this.memos as Memos;
+      const bookmarks = this.bookmarks as string[];
+      const bookmarkedMemos = bookmarks.map((memoId) => {
+        const foundIndex = memos.findIndex({ id: memoId }).value();
+        if (foundIndex < 0) {
+          return null;
+        }
+        return memos.value[foundIndex];
+      });
+
+      return lodash.compact(bookmarkedMemos);
+    }
+    return [];
   }
 
   allocate(id: string) {
