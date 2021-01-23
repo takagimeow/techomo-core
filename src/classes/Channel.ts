@@ -152,7 +152,7 @@ export class Channel extends Base {
       if (foundIndex < 0) {
         return this;
       }
-      memos.value.splice(foundIndex, foundIndex + 1);
+      memos.value.splice(foundIndex, 1);
       this.memos = memos;
     }
 

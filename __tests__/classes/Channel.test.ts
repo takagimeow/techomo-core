@@ -170,11 +170,11 @@ describe('Channelクラス', () => {
         const memo = memoGenerator();
         channel.push(memo);
       }
-      const memo = channel.memos?.value[9];
+      const memo = channel.memos?.value[4];
       const memoId = memo?.get('id') as string;
       channel.delete(memoId);
       expect(channel.length()).toBe(9);
-      expect(channel.get('memos')?.value[8].id).not.toBe(memoId);
+      expect(channel.get('memos')?.value[4].id).not.toBe(memoId);
     });
     it('対応するidを持つMemoクラスのインスタンスに新しいインデックスを割り当てる', () => {
       const channel = channelGenerator();
