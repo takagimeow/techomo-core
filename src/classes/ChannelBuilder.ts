@@ -37,7 +37,10 @@ export class ChannelBuilder {
   }
 
   color(color: Exclude<Channel[keyof Pick<Channel, 'color'>], undefined>) {
-    this._channel = Object.assign(this._channel, { color });
+    this._channel = Object.assign(this._channel, { color: '#000000' });
+    if (color !== '') {
+      this._channel.editColor(color);
+    }
     return this;
   }
 

@@ -72,7 +72,11 @@ export class Channel {
   }
 
   editColor(color: string): this & Exclude<Pick<Channel, 'color'>, undefined> {
-    return Object.assign(this, { color });
+    const regexp = new RegExp('^#(?:[0-9a-fA-F]{3}){1,2}$');
+    if (regexp.exec(color)) {
+      return Object.assign(this, { color });
+    }
+    return this;
   }
 
   updateUpdatedAt(updatedAt: Date): this & Exclude<Pick<Channel, 'updatedAt'>, undefined> {

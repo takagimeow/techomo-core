@@ -70,6 +70,43 @@ describe('Channelクラス', () => {
       channel.editName(name);
       expect(channel.name).toBe(name);
     });
+
+    it('色を指定して初期化しないと、黒色がデフォルト値で設定される', () => {
+      let channel = new ChannelBuilder()
+        .id('')
+        .workspaceId('')
+        .index(0)
+        .name('')
+        .bookmarks([])
+        .color('')
+        .build();
+      expect(channel.color).toBe('#000000');
+
+      channel = new ChannelBuilder()
+        .id('')
+        .workspaceId('')
+        .index(0)
+        .name('')
+        .bookmarks([])
+        .color('#ffffff')
+        .build();
+      expect(channel.color).toBe('#ffffff');
+    });
+
+    it('色は16進数のカラーコードしか編集できない', () => {
+      const channel = new ChannelBuilder()
+        .id('')
+        .workspaceId('')
+        .index(0)
+        .name('')
+        .bookmarks([])
+        .color('')
+        .build();
+      channel.editColor('hellow');
+      expect(channel.color).toBe('#000000');
+      channel.editColor('#ffffff');
+      expect(channel.color).toBe('#ffffff');
+    });
   });
 
   describe('memosに対する操作', () => {
