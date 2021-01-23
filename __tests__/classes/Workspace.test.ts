@@ -37,4 +37,50 @@ describe('Workspaceクラス', () => {
       expect(channels.value[4].id).not.toBe(channelId);
     });
   });
+
+  describe('id等の割り当て', () => {
+    it('push関数を呼び出した後は、すべてのmemosの要素のindexの値が更新される', () => {
+      const workspace = workspaceGenerator();
+      for (let i = 0; i < 10; i += 1) {
+        const channel = channelGenerator();
+        workspace.push(channel);
+      }
+      for (let i = 0; i < 10; i += 1) {
+        expect(workspace.channels?.value[i].index).toBe(i);
+      }
+    });
+    it('対応するidを持つChannelクラスのインスタンスに新しいインデックスを割り当てる', () => {
+      const workspace = workspaceGenerator();
+      for (let i = 0; i < 10; i += 1) {
+        const channel = channelGenerator();
+        workspace.push(channel);
+      }
+      const channel = workspace.channels?.value[4];
+      const channelId = channel?.get('id') as string;
+      workspace.allocate(channelId);
+      expect(workspace.channels?.value[4].index).toBe(4);
+    });
+    it('channelsの要素のすべてにindexを割り当てる', () => {
+      const workspace = workspaceGenerator();
+      for (let i = 0; i < 10; i += 1) {
+        const channel = channelGenerator();
+        workspace.push(channel);
+      }
+      workspace.allocateAll();
+      for (let i = 0; i < 10; i += 1) {
+        expect(workspace.channels?.value[i].index).toBe(i);
+      }
+    });
+
+    it('追加した際に、所属するWorkspaceのIDが設定される', () => {
+      const workspace = workspaceGenerator();
+      for (let i = 0; i < 9; i += 1) {
+        const channel = channelGenerator();
+        workspace.push(channel);
+      }
+      for (let i = 0; i < 9; i += 1) {
+        expect(workspace.channels?.value[i].groupId).toBe(workspace.id);
+      }
+    });
+  });
 });
