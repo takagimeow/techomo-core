@@ -8,28 +8,30 @@ export class MemoBuilder {
     this._memo = new Memo();
   }
 
-  id(id: Memo[keyof Pick<Memo, 'id'>]) {
+  id(id: Exclude<Memo[keyof Pick<Memo, 'id'>], undefined>) {
     this._memo = Object.assign(this._memo, { id });
     return this;
   }
 
-  channelId(channelId: Memo[keyof Pick<Memo, 'channelId'>]) {
+  channelId(channelId: Exclude<Memo[keyof Pick<Memo, 'channelId'>], undefined>) {
     this._memo = Object.assign(this._memo, { channelId });
     return this;
   }
 
-  index(index: Memo[keyof Pick<Memo, 'index'>]) {
+  index(index: Exclude<Memo[keyof Pick<Memo, 'index'>], undefined>) {
     this._memo = Object.assign(this._memo, { index });
     return this;
   }
 
-  title(title: Memo[keyof Pick<Memo, 'title'>]) {
-    this._memo = Object.assign(this._memo, { title });
+  title(title: Exclude<Memo[keyof Pick<Memo, 'title'>], undefined>) {
+    this._memo = Object.assign(this._memo, { title: '' });
+    this._memo.editTitle(title);
     return this;
   }
 
-  body(body: Memo[keyof Pick<Memo, 'body'>]) {
-    this._memo = Object.assign(this._memo, { body });
+  body(body: Exclude<Memo[keyof Pick<Memo, 'body'>], undefined>) {
+    this._memo = Object.assign(this._memo, { body: '' });
+    this._memo.editBody(body);
     return this;
   }
 

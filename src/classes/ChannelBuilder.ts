@@ -10,32 +10,32 @@ export class ChannelBuilder {
     this._channel = new Channel();
   }
 
-  id(id: Channel[keyof Pick<Channel, 'id'>]) {
+  id(id: Exclude<Channel[keyof Pick<Channel, 'id'>], undefined>) {
     this._channel = Object.assign(this._channel, { id });
     return this;
   }
 
-  workspaceId(workspaceId: Channel[keyof Pick<Channel, 'workspaceId'>]) {
+  workspaceId(workspaceId: Exclude<Channel[keyof Pick<Channel, 'workspaceId'>], undefined>) {
     this._channel = Object.assign(this._channel, { workspaceId });
     return this;
   }
 
-  index(index: Channel[keyof Pick<Channel, 'index'>]) {
+  index(index: Exclude<Channel[keyof Pick<Channel, 'index'>], undefined>) {
     this._channel = Object.assign(this._channel, { index });
     return this;
   }
 
-  name(name: Channel[keyof Pick<Channel, 'name'>]) {
+  name(name: Exclude<Channel[keyof Pick<Channel, 'name'>], undefined>) {
     this._channel = Object.assign(this._channel, { name });
     return this;
   }
 
-  bookmarks(bookmarks: Channel[keyof Pick<Channel, 'bookmarks'>]) {
+  bookmarks(bookmarks: Exclude<Channel[keyof Pick<Channel, 'bookmarks'>], undefined>) {
     this._channel = Object.assign(this._channel, { bookmarks });
     return this;
   }
 
-  color(color: Channel[keyof Pick<Channel, 'color'>]) {
+  color(color: Exclude<Channel[keyof Pick<Channel, 'color'>], undefined>) {
     this._channel = Object.assign(this._channel, { color });
     return this;
   }

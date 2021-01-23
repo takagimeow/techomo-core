@@ -36,6 +36,16 @@ describe('Channelクラス', () => {
       channel.push(memo2);
       expect(channel.memos?.findIndex({ id: memo2.id }).value()).toBe(1);
     });
+    it('push関数を呼び出した後は、すべてのmemosの要素のindexの値が更新される', () => {
+      const channel = channelGenerator();
+      for (let i = 0; i < 10; i += 1) {
+        const memo = memoGenerator();
+        channel.push(memo);
+      }
+      for (let i = 0; i < 10; i += 1) {
+        expect(channel.memos?.value[i].index).toBe(i);
+      }
+    });
     it('現在のmemosの長さを取得する', () => {
       const channel = channelGenerator();
       for (let i = 0; i < 10; i += 1) {
@@ -56,6 +66,21 @@ describe('Channelクラス', () => {
       expect(channel.memos?.value[4].id).not.toBe(memoId);
       channel.swap(memoId, 4);
       expect(channel.memos?.value[4].id).toBe(memoId);
+    });
+    it('swap関数を呼び出した後は、すべてのmemosの要素のindexの値が更新される', () => {
+      const channel = channelGenerator();
+      for (let i = 0; i < 10; i += 1) {
+        const memo = memoGenerator();
+        channel.push(memo);
+      }
+      const memo = memoGenerator();
+      const memoId = memo.get('id') as string;
+      channel.push(memo);
+      channel.swap(memoId, 4);
+      for (let i = 0; i < 10; i += 1) {
+        expect(channel.memos?.value[i].index).toBe(i);
+      }
+      expect(channel.memos?.value[channel.memos?.findIndex({ id: memoId }).value()].index).toBe(4);
     });
     it('idを指定したらそのidに対応するmemoを削除する', () => {
       const channel = channelGenerator();

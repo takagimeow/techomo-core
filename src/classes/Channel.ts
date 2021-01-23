@@ -85,6 +85,7 @@ export class Channel {
   push(memo: Memo) {
     if (common.has(this, 'memos')) {
       this.memos?.value.push(memo);
+      this.allocateAll();
       /*
       const memos = this.memos?.value as Memo[];
       memos.push(memo);
@@ -112,6 +113,7 @@ export class Channel {
       memos.value[index] = targetMemo;
       memos.value[foundIndex] = tmpMemo;
       this.memos = memos;
+      this.allocateAll();
     }
 
     return this;

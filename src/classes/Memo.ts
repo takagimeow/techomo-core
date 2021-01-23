@@ -1,4 +1,5 @@
 import * as common from 'src/common';
+import xss from 'xss';
 
 export interface Memo {
   id?: string;
@@ -19,6 +20,9 @@ type memoBodyType = Pick<Memo, 'body'>;
 type memoCreatedAtType = Pick<Memo, 'createdAt'>;
 type memoUpdatedAtType = Pick<Memo, 'updateUpdatedAt'>;
 */
+
+export const TITLE_LENGTH_MAX = 140;
+export const BODY_LENGTH_MAX = 140;
 
 export class Memo {
   id?: string;
@@ -60,11 +64,17 @@ export class Memo {
   }
 
   editTitle(title: string): this & Pick<Memo, 'title'> {
-    return Object.assign(this, { title });
+    if (title.length > TITLE_LENGTH_MAX) return this;
+    const newTitle = xss(title);
+
+    return Object.assign(this, { title: newTitle });
   }
 
   editBody(body: string): this & Pick<Memo, 'body'> {
-    return Object.assign(this, { body });
+    if (body.length > BODY_LENGTH_MAX) return this;
+    const newBody = xss(body);
+
+    return Object.assign(this, { body: newBody });
   }
 
   updateUpdatedAt(updatedAt: Date): this & Pick<Memo, 'updatedAt'> {

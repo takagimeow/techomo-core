@@ -3,3 +3,6 @@ dist
 docs
 uml
 builderFactory.ts
+
+# 一時的
+Workspace*.ts
