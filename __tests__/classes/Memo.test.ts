@@ -1,4 +1,5 @@
 // import _ from 'lodash';
+import { TITLE_LENGTH_MAX, BODY_LENGTH_MAX } from 'src/classes/Memo';
 import { MemoBuilder } from 'src/classes/MemoBuilder';
 import { textGenerator } from 'src/testUtils/textGenerator';
 
@@ -29,8 +30,8 @@ describe('Memoクラス', () => {
   });
 
   describe('文字列の検証', () => {
-    it('タイトルは140文字しか与えることができない', () => {
-      let title = textGenerator(141);
+    it('タイトルは設定した文字数しか与えることができない', () => {
+      let title = textGenerator(TITLE_LENGTH_MAX + 1);
       let memo = new MemoBuilder()
         .id('testID')
         .channelId('testChannelId')
@@ -40,7 +41,7 @@ describe('Memoクラス', () => {
         .build();
       expect(memo.title).toBe('');
 
-      title = textGenerator(140);
+      title = textGenerator(TITLE_LENGTH_MAX);
       memo = new MemoBuilder()
         .id('testID')
         .channelId('testChannelId')
@@ -50,7 +51,7 @@ describe('Memoクラス', () => {
         .build();
       expect(memo.title).toBe(title);
     });
-    it('編集するときタイトルは140文字しか入力できない', () => {
+    it('編集するときタイトルは設定した文字数しか入力できない', () => {
       const memo = new MemoBuilder()
         .id('testID')
         .channelId('testChannelId')
@@ -58,15 +59,15 @@ describe('Memoクラス', () => {
         .title('')
         .body('')
         .build();
-      let title = textGenerator(141);
+      let title = textGenerator(TITLE_LENGTH_MAX + 1);
       memo.editTitle(title);
       expect(memo.title).toBe('');
-      title = textGenerator(140);
+      title = textGenerator(TITLE_LENGTH_MAX);
       memo.editTitle(title);
       expect(memo.title).toBe(title);
     });
-    it('本文は140文字しか与えることができない', () => {
-      let body = textGenerator(141);
+    it('本文は設定した文字数しか与えることができない', () => {
+      let body = textGenerator(BODY_LENGTH_MAX + 1);
       let memo = new MemoBuilder()
         .id('testID')
         .channelId('testChannelId')
@@ -76,7 +77,7 @@ describe('Memoクラス', () => {
         .build();
       expect(memo.body).toBe('');
 
-      body = textGenerator(140);
+      body = textGenerator(BODY_LENGTH_MAX);
       memo = new MemoBuilder()
         .id('testID')
         .channelId('testChannelId')
@@ -86,7 +87,7 @@ describe('Memoクラス', () => {
         .build();
       expect(memo.body).toBe(body);
     });
-    it('編集するとき本文は140文字しか入力できない', () => {
+    it('編集するとき本文は設定した文字数しか入力できない', () => {
       const memo = new MemoBuilder()
         .id('testID')
         .channelId('testChannelId')
@@ -94,10 +95,10 @@ describe('Memoクラス', () => {
         .title('')
         .body('')
         .build();
-      let body = textGenerator(141);
+      let body = textGenerator(BODY_LENGTH_MAX + 1);
       memo.editBody(body);
       expect(memo.body).toBe('');
-      body = textGenerator(140);
+      body = textGenerator(BODY_LENGTH_MAX);
       memo.editBody(body);
       expect(memo.body).toBe(body);
     });

@@ -26,7 +26,8 @@ export class ChannelBuilder {
   }
 
   name(name: Exclude<Channel[keyof Pick<Channel, 'name'>], undefined>) {
-    this._channel = Object.assign(this._channel, { name });
+    this._channel = Object.assign(this._channel, { name: '' });
+    this._channel.editName(name);
     return this;
   }
 

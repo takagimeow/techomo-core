@@ -2,6 +2,8 @@
 import { ChannelBuilder } from 'src/classes/ChannelBuilder';
 import { memoGenerator } from 'src/testUtils/memoGenerator';
 import { channelGenerator } from 'src/testUtils/channelGenerator';
+import { textGenerator } from 'src/testUtils/textGenerator';
+import { NAME_LENGTH_MAX } from 'src/classes/Channel';
 
 jest.setTimeout(10000);
 
@@ -24,6 +26,49 @@ describe('Channelクラス', () => {
         .color('')
         .build();
       expect(channel.index).toBe(0);
+    });
+  });
+
+  describe('文字列に対する検証', () => {
+    it('名前は設定した文字数しか与えることができない', () => {
+      let name = textGenerator(NAME_LENGTH_MAX + 1);
+      let channel = new ChannelBuilder()
+        .id('')
+        .workspaceId('')
+        .index(0)
+        .name(name)
+        .bookmarks([])
+        .color('')
+        .build();
+      expect(channel.name).toBe('');
+
+      name = textGenerator(NAME_LENGTH_MAX);
+      channel = new ChannelBuilder()
+        .id('')
+        .workspaceId('')
+        .index(0)
+        .name(name)
+        .bookmarks([])
+        .color('')
+        .build();
+      expect(channel.name).toBe(name);
+    });
+    it('編集するとき名前は設定した文字数しか入力できない', () => {
+      let name = textGenerator(NAME_LENGTH_MAX + 1);
+      const channel = new ChannelBuilder()
+        .id('')
+        .workspaceId('')
+        .index(0)
+        .name('')
+        .bookmarks([])
+        .color('')
+        .build();
+      channel.editName(name);
+      expect(channel.name).toBe('');
+
+      name = textGenerator(NAME_LENGTH_MAX);
+      channel.editName(name);
+      expect(channel.name).toBe(name);
     });
   });
 

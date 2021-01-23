@@ -1,9 +1,12 @@
 import lodash from 'lodash';
 import * as common from 'src/common';
+import xss from 'xss';
 // import lowmemos from 'src/lowmemos';
 import { Memo } from './Memo';
 
 type Memos = lodash.CollectionChain<Memo>;
+
+export const NAME_LENGTH_MAX = 140;
 
 export interface Channel {
   id?: string;
@@ -54,23 +57,25 @@ export class Channel {
     return common.has(this, key);
   }
 
-  editId(id: string): this & Pick<Channel, 'id'> {
+  editId(id: string): this & Exclude<Pick<Channel, 'id'>, undefined> {
     return Object.assign(this, { id });
   }
 
-  editWorkspaceId(workspaceId: string): this & Pick<Channel, 'workspaceId'> {
+  editWorkspaceId(workspaceId: string): this & Exclude<Pick<Channel, 'workspaceId'>, undefined> {
     return Object.assign(this, { workspaceId });
   }
 
-  editName(name: string): this & Pick<Channel, 'name'> {
-    return Object.assign(this, { name });
+  editName(name: string): this & Exclude<Pick<Channel, 'name'>, undefined> {
+    if (name.length > NAME_LENGTH_MAX) return this;
+    const newName = xss(name);
+    return Object.assign(this, { name: newName });
   }
 
-  editColor(color: string): this & Pick<Channel, 'color'> {
+  editColor(color: string): this & Exclude<Pick<Channel, 'color'>, undefined> {
     return Object.assign(this, { color });
   }
 
-  updateUpdatedAt(updatedAt: Date): this & Pick<Channel, 'updatedAt'> {
+  updateUpdatedAt(updatedAt: Date): this & Exclude<Pick<Channel, 'updatedAt'>, undefined> {
     return Object.assign(this, { updatedAt });
   }
 

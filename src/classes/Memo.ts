@@ -55,29 +55,29 @@ export class Memo {
     return common.has(this, key);
   }
 
-  editId(id: string): this & Pick<Memo, 'id'> {
+  editId(id: string): this & Exclude<Pick<Memo, 'id'>, undefined> {
     return Object.assign(this, { id });
   }
 
-  editChannelId(channelId: string): this & Pick<Memo, 'channelId'> {
+  editChannelId(channelId: string): this & Exclude<Pick<Memo, 'channelId'>, undefined> {
     return Object.assign(this, { channelId });
   }
 
-  editTitle(title: string): this & Pick<Memo, 'title'> {
+  editTitle(title: string): this & Exclude<Pick<Memo, 'title'>, undefined> {
     if (title.length > TITLE_LENGTH_MAX) return this;
     const newTitle = xss(title);
 
     return Object.assign(this, { title: newTitle });
   }
 
-  editBody(body: string): this & Pick<Memo, 'body'> {
+  editBody(body: string): this & Exclude<Pick<Memo, 'body'>, undefined> {
     if (body.length > BODY_LENGTH_MAX) return this;
     const newBody = xss(body);
 
     return Object.assign(this, { body: newBody });
   }
 
-  updateUpdatedAt(updatedAt: Date): this & Pick<Memo, 'updatedAt'> {
+  updateUpdatedAt(updatedAt: Date): this & Exclude<Pick<Memo, 'updatedAt'>, undefined> {
     return Object.assign(this, { updatedAt });
   }
 }
