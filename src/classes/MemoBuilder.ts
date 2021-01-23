@@ -1,41 +1,29 @@
 /* eslint-disable no-underscore-dangle */
 import { Memo } from './Memo';
+import { BaseBuilder } from './BaseBuilder';
 
-export class MemoBuilder {
-  protected _memo: Memo;
+export class MemoBuilder extends BaseBuilder {
+  protected _base: Memo;
 
   constructor() {
-    this._memo = new Memo();
+    const memo = new Memo();
+    super(memo);
+    this._base = memo;
   }
 
-  id(id: Exclude<Memo[keyof Pick<Memo, 'id'>], undefined>) {
-    this._memo = Object.assign(this._memo, { id });
-    return this;
-  }
-
-  channelId(channelId: Exclude<Memo[keyof Pick<Memo, 'channelId'>], undefined>) {
-    this._memo = Object.assign(this._memo, { channelId });
-    return this;
-  }
-
-  index(index: Exclude<Memo[keyof Pick<Memo, 'index'>], undefined>) {
-    this._memo = Object.assign(this._memo, { index });
-    return this;
-  }
-
-  title(title: Exclude<Memo[keyof Pick<Memo, 'title'>], undefined>) {
-    this._memo = Object.assign(this._memo, { title: '' });
-    this._memo.editTitle(title);
+  name(name: Exclude<Memo[keyof Pick<Memo, 'name'>], undefined>) {
+    this._base = Object.assign(this._base, { name: '' });
+    this._base.editName(name);
     return this;
   }
 
   body(body: Exclude<Memo[keyof Pick<Memo, 'body'>], undefined>) {
-    this._memo = Object.assign(this._memo, { body: '' });
-    this._memo.editBody(body);
+    this._base = Object.assign(this._base, { body: '' });
+    this._base.editBody(body);
     return this;
   }
 
   build() {
-    return this._memo;
+    return this._base;
   }
 }

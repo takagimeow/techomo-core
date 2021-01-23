@@ -1,5 +1,5 @@
 // import _ from 'lodash';
-import { TITLE_LENGTH_MAX, BODY_LENGTH_MAX } from 'src/classes/Memo';
+import { NAME_LENGTH_MAX, BODY_LENGTH_MAX } from 'src/constants';
 import { MemoBuilder } from 'src/classes/MemoBuilder';
 import { textGenerator } from 'src/testUtils/textGenerator';
 
@@ -8,12 +8,12 @@ describe('Memoクラス', () => {
     it('何も値をセットしないでbuildを呼び出しても、初期値が返ってくる', () => {
       const memo = new MemoBuilder().build();
       expect(memo.id).toBe(undefined);
-      expect(memo.title).toBe(undefined);
+      expect(memo.name).toBe(undefined);
       expect(memo.body).toBe(undefined);
       expect(memo.createdAt).toBeTruthy();
     });
     it('MemoBuilder関数を通してビルダーパターンのMemoクラスのインスタンスを作成する', () => {
-      const memo = new MemoBuilder().id('').channelId('').index(0).title('').body('').build();
+      const memo = new MemoBuilder().id('').groupId('').index(0).name('').body('').build();
       expect(memo.index).toBe(0);
     });
   });
@@ -25,54 +25,54 @@ describe('Memoクラス', () => {
     });
     it('getメソッドに存在するプロパティを渡した場合、そのプロパティに値を設定していない場合は初期値が返ってくる', () => {
       const memo = new MemoBuilder().id('testID').build();
-      expect(memo.get('title')).toStrictEqual(undefined);
+      expect(memo.get('name')).toStrictEqual(undefined);
     });
   });
 
   describe('文字列の検証', () => {
     it('タイトルは設定した文字数しか与えることができない', () => {
-      let title = textGenerator(TITLE_LENGTH_MAX + 1);
+      let name = textGenerator(NAME_LENGTH_MAX + 1);
       let memo = new MemoBuilder()
         .id('testID')
-        .channelId('testChannelId')
+        .groupId('testGroupId')
         .index(0)
-        .title(title)
+        .name(name)
         .body('')
         .build();
-      expect(memo.title).toBe('');
+      expect(memo.name).toBe('');
 
-      title = textGenerator(TITLE_LENGTH_MAX);
+      name = textGenerator(NAME_LENGTH_MAX);
       memo = new MemoBuilder()
         .id('testID')
-        .channelId('testChannelId')
+        .groupId('testGroupId')
         .index(0)
-        .title(title)
+        .name(name)
         .body('')
         .build();
-      expect(memo.title).toBe(title);
+      expect(memo.name).toBe(name);
     });
     it('編集するときタイトルは設定した文字数しか入力できない', () => {
       const memo = new MemoBuilder()
         .id('testID')
-        .channelId('testChannelId')
+        .groupId('testGroupId')
         .index(0)
-        .title('')
+        .name('')
         .body('')
         .build();
-      let title = textGenerator(TITLE_LENGTH_MAX + 1);
-      memo.editTitle(title);
-      expect(memo.title).toBe('');
-      title = textGenerator(TITLE_LENGTH_MAX);
-      memo.editTitle(title);
-      expect(memo.title).toBe(title);
+      let name = textGenerator(NAME_LENGTH_MAX + 1);
+      memo.editName(name);
+      expect(memo.name).toBe('');
+      name = textGenerator(NAME_LENGTH_MAX);
+      memo.editName(name);
+      expect(memo.name).toBe(name);
     });
     it('本文は設定した文字数しか与えることができない', () => {
       let body = textGenerator(BODY_LENGTH_MAX + 1);
       let memo = new MemoBuilder()
         .id('testID')
-        .channelId('testChannelId')
+        .groupId('testGroupId')
         .index(0)
-        .title('')
+        .name('')
         .body(body)
         .build();
       expect(memo.body).toBe('');
@@ -80,9 +80,9 @@ describe('Memoクラス', () => {
       body = textGenerator(BODY_LENGTH_MAX);
       memo = new MemoBuilder()
         .id('testID')
-        .channelId('testChannelId')
+        .groupId('testGroupId')
         .index(0)
-        .title('')
+        .name('')
         .body(body)
         .build();
       expect(memo.body).toBe(body);
@@ -90,9 +90,9 @@ describe('Memoクラス', () => {
     it('編集するとき本文は設定した文字数しか入力できない', () => {
       const memo = new MemoBuilder()
         .id('testID')
-        .channelId('testChannelId')
+        .groupId('testGroupId')
         .index(0)
-        .title('')
+        .name('')
         .body('')
         .build();
       let body = textGenerator(BODY_LENGTH_MAX + 1);
