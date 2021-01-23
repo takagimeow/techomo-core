@@ -136,6 +136,7 @@ export class Channel {
         return this;
       }
       memos.value[foundIndex].index = foundIndex;
+      memos.value[foundIndex].channelId = this.id;
       this.memos = memos;
     }
     return this;

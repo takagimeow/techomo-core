@@ -199,5 +199,16 @@ describe('Channelクラス', () => {
         expect(channel.memos?.value[i].index).toBe(i);
       }
     });
+
+    it('追加した際に、所属するChannelのIDが設定される', () => {
+      const channel = channelGenerator();
+      for (let i = 0; i < 9; i += 1) {
+        const memo = memoGenerator();
+        channel.push(memo);
+      }
+      for (let i = 0; i < 9; i += 1) {
+        expect(channel.memos?.value[i].channelId).toBe(channel.id);
+      }
+    });
   });
 });
