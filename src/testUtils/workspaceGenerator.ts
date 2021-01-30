@@ -1,18 +1,17 @@
 import faker from 'faker';
-import { ChannelBuilder } from 'src/classes/ChannelBuilder';
+import { WorkspaceBuilder } from 'src/classes/workspaceBuilder';
 
-export function channelGenerator() {
+export function workspaceGenerator() {
   const id = faker.random.uuid();
   const groupId = faker.random.uuid();
   const name = faker.lorem.text();
-  const channel = new ChannelBuilder()
+  const workspace = new WorkspaceBuilder()
     .id(id)
     .groupId(groupId)
     .index(0)
     .name(name)
-    .memos([])
-    .bookmarks([])
+    .channels([])
     .color('#000000')
     .build();
-  return channel;
+  return workspace;
 }

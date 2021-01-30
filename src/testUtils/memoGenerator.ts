@@ -3,14 +3,15 @@ import { MemoBuilder } from 'src/classes/MemoBuilder';
 
 export function memoGenerator() {
   const id = faker.random.uuid();
-  const channelId = faker.random.uuid();
-  const title = faker.lorem.text();
+  const groupId = faker.random.uuid();
+  const name = faker.lorem.text();
   const body = faker.lorem.paragraph();
   const memo = new MemoBuilder()
     .id(id)
-    .channelId(channelId)
+    .groupId(groupId)
     .index(0)
-    .title(title)
+    .name(name)
+    .color('')
     .body(body)
     .build();
   return memo;

@@ -13,13 +13,13 @@ describe('Channelクラス', () => {
       const channel = new ChannelBuilder().build();
       expect(channel.id).toBe(undefined);
       expect(channel.name).toBe(undefined);
-      expect(channel.workspaceId).toBe(undefined);
+      expect(channel.groupId).toBe(undefined);
       expect(channel.createdAt).toBeTruthy();
     });
     it('ChannelBuilder関数を通してビルダーパターンのChannelクラスのインスタンスを作成する', () => {
       const channel = new ChannelBuilder()
         .id('')
-        .workspaceId('')
+        .groupId('')
         .index(0)
         .name('')
         .bookmarks([])
@@ -34,7 +34,7 @@ describe('Channelクラス', () => {
       let name = textGenerator(NAME_LENGTH_MAX + 1);
       let channel = new ChannelBuilder()
         .id('')
-        .workspaceId('')
+        .groupId('')
         .index(0)
         .name(name)
         .bookmarks([])
@@ -45,7 +45,7 @@ describe('Channelクラス', () => {
       name = textGenerator(NAME_LENGTH_MAX);
       channel = new ChannelBuilder()
         .id('')
-        .workspaceId('')
+        .groupId('')
         .index(0)
         .name(name)
         .bookmarks([])
@@ -57,7 +57,7 @@ describe('Channelクラス', () => {
       let name = textGenerator(NAME_LENGTH_MAX + 1);
       const channel = new ChannelBuilder()
         .id('')
-        .workspaceId('')
+        .groupId('')
         .index(0)
         .name('')
         .bookmarks([])
@@ -74,7 +74,7 @@ describe('Channelクラス', () => {
     it('色を指定して初期化しないと、黒色がデフォルト値で設定される', () => {
       let channel = new ChannelBuilder()
         .id('')
-        .workspaceId('')
+        .groupId('')
         .index(0)
         .name('')
         .bookmarks([])
@@ -84,7 +84,7 @@ describe('Channelクラス', () => {
 
       channel = new ChannelBuilder()
         .id('')
-        .workspaceId('')
+        .groupId('')
         .index(0)
         .name('')
         .bookmarks([])
@@ -96,7 +96,7 @@ describe('Channelクラス', () => {
     it('色は16進数のカラーコードしか編集できない', () => {
       const channel = new ChannelBuilder()
         .id('')
-        .workspaceId('')
+        .groupId('')
         .index(0)
         .name('')
         .bookmarks([])
@@ -170,11 +170,11 @@ describe('Channelクラス', () => {
         const memo = memoGenerator();
         channel.push(memo);
       }
-      const memo = channel.memos?.value[9];
+      const memo = channel.memos?.value[4];
       const memoId = memo?.get('id') as string;
       channel.delete(memoId);
       expect(channel.length()).toBe(9);
-      expect(channel.get('memos')?.value[8].id).not.toBe(memoId);
+      expect(channel.get('memos')?.value[4].id).not.toBe(memoId);
     });
     it('対応するidを持つMemoクラスのインスタンスに新しいインデックスを割り当てる', () => {
       const channel = channelGenerator();
@@ -207,7 +207,7 @@ describe('Channelクラス', () => {
         channel.push(memo);
       }
       for (let i = 0; i < 9; i += 1) {
-        expect(channel.memos?.value[i].channelId).toBe(channel.id);
+        expect(channel.memos?.value[i].groupId).toBe(channel.id);
       }
     });
   });
