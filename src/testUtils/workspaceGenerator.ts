@@ -1,5 +1,5 @@
 import faker from 'faker';
-import { WorkspaceBuilder } from 'src/classes/workspaceBuilder';
+import { WorkspaceBuilder } from 'src/classes/WorkspaceBuilder';
 
 export function workspaceGenerator() {
   const id = faker.random.uuid();

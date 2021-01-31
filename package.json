@@ -1,8 +1,19 @@
 {
-  "name": "package-template",
+  "name": "techomo-core",
+  "description": "The core library that is developed for Techomo, memo app made by takagimeow.",
+  "keywords": [
+    "memo",
+    "slack",
+    "channel",
+    "note"
+  ],
+  "author": "Keisuke Takagi(takagimeow) <mit@takagi.app>",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "scripts": {
     "type-check": "tsc --noEmit",
     "build": "yarn run type-check && yarn run test && npx webpack --config webpack.config.js",
