@@ -1,3 +1,10 @@
 node_modules
 dist
 docs
+builderFactory.ts
+
+uml/node-json-db.pu
+uml/Proxyの構造.pu
+uml/コンセプト.pu
+
+coverage
